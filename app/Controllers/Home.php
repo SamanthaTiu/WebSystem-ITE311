@@ -6,6 +6,16 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('template'); // this should match a view file like app/Views/template.php
+        return view('index');
+    }
+
+    public function about()
+    {
+        return view('about');
+    }
+
+    public function contact()
+    {
+        return view('contact');
     }
 }
