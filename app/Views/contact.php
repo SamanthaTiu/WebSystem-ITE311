@@ -7,7 +7,7 @@
             background-color: #f8f9fa;
         }
         .content-box {
-            margin-top: 100px;
+            margin-top: 0 px;
             background: #ffffff;
             padding: 40px;
             border-radius: 15px;
@@ -33,6 +33,8 @@
             <a href="<?= base_url('/') ?>" class="btn btn-primary btn-sm">Home</a>
             <a href="<?= base_url('about') ?>" class="btn btn-secondary btn-sm">About</a>
             <a href="<?= base_url('contact') ?>" class="btn btn-success btn-sm">Contact</a>
+            <a href="<?= base_url('/login') ?>" class="btn btn-success btn-sm">Login</a>
+            <a href="<?= base_url('/register') ?>" class="btn btn-success btn-sm">Register</a>
         </nav>
     </div>
 </div>
