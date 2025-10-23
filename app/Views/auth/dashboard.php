@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title><?= ucfirst($role) ?> Dashboard</title>
     <style>
         body {
             margin: 0;
@@ -87,23 +87,40 @@
         <h4><?= esc($name) ?></h4>
         <p><?= esc($email) ?></p>
     </div>
-    <a href="<?= base_url('dashboard') ?>">📊 Dashboard</a>
+
+    <?php if ($role === 'admin'): ?>
+        <a href="<?= base_url('dashboard') ?>">📊 Admin Dashboard</a>
+        <a href="#">👥 Manage Users</a>
+        <a href="#">📚 Manage Courses</a>
+        <a href="#">⚙️ System Settings</a>
+    <?php elseif ($role === 'instructor'): ?>
+        <a href="<?= base_url('dashboard') ?>">📘 Instructor Dashboard</a>
+        <a href="#">🧑 My Students</a>
+        <a href="#">📝 Gradebook</a>
+        <a href="#">📅 Class Schedule</a>
+    <?php else: ?>
+        <a href="<?= base_url('dashboard') ?>">🎓 Student Dashboard</a>
+        <a href="#">📖 My Courses</a>
+        <a href="#">🧾 My Grades</a>
+        <a href="#">💬 Announcements</a>
+    <?php endif; ?>
+
     <a href="<?= base_url('logout') ?>">🚪 Logout</a>
 </div>
 
 <div class="main-content">
-    <h2>Dashboard</h2>
+    <h2><?= ucfirst($role) ?> Dashboard</h2>
 
     <div class="card text-center">
         <h4>Welcome, <strong><?= esc($name) ?></strong>!</h4>
         <p>You are logged in as <strong><?= esc($role) ?></strong>.</p>
 
         <?php if ($role === 'admin'): ?>
-            <p>Manage users, courses, and system settings.</p>
+            <p>Here you can manage users, courses, and system settings.</p>
         <?php elseif ($role === 'instructor'): ?>
-            <p>Manage your lessons, students, and grades.</p>
+            <p>Here you can manage your students, lessons, and grades.</p>
         <?php else: ?>
-            <p>View lessons, take quizzes, and track your progress.</p>
+            <p>Here you can view your lessons, submit assignments, and check grades.</p>
         <?php endif; ?>
     </div>
 </div>
