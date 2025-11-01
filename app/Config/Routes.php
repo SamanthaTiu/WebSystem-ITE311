@@ -24,12 +24,20 @@ $routes->get('/logout', 'Auth::logout');
 
 $routes->get('/dashboard', 'Auth::dashboard');
 
-$routes->get('/announcements', 'Announcement::index');
+$routes->get('/announcements', 'Announcements::index');
 
-$routes->get('/Instructor/dashboard', 'Instructor::dashboard');
+$routes->get('announcements', 'Announcements::index');
 
-$routes->get('/admin/dashboard', 'Admin::dashboard');
+// Protected routes with RoleAuth filter
+$routes->group('admin', ['filter' => 'roleauth'], function($routes) {
+    $routes->get('dashboard', 'Admin::dashboard');
+});
 
-$routes->get('Instructor/dashboard', 'Instructor::dashboard');
+$routes->group('teacher', ['filter' => 'roleauth'], function($routes) {
+    $routes->get('dashboard', 'Teacher::dashboard');
+});
 
-$routes->get('admin/dashboard', 'Admin::dashboard');
+// You can add student routes here if needed in the future
+$routes->group('student', ['filter' => 'roleauth'], function($routes) {
+    // Add student-specific routes here
+});

@@ -16,7 +16,7 @@ class AnnouncementModel extends Model
     protected $allowedFields    = ['title', 'content', 'created_at'];
 
     // ✅ Automatically handle created_at and updated_at
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';

@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?= ucfirst($role) ?> Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Announcements</title>
     <style>
         body {
             margin: 0;
@@ -28,7 +29,7 @@
             width: 90px;
             height: 90px;
             border-radius: 50%;
-            background: #6c757d;
+            background: #007bff;
             margin: 0 auto 10px;
             display: flex;
             align-items: center;
@@ -83,45 +84,20 @@
 
 <div class="sidebar">
     <div class="profile">
-        <div class="circle"><?= strtoupper(substr($name, 0, 1)) ?></div>
-        <h4><?= esc($name) ?></h4>
-        <p><?= esc($email) ?></p>
+        <div class="circle"><?= strtoupper(substr(session()->get('name'), 0, 1)) ?></div>
+        <h4><?= esc(session()->get('name')) ?></h4>
+        <p><?= esc(session()->get('email')) ?></p>
     </div>
-
-    <?php if ($role === 'admin'): ?>
-        <a href="<?= base_url('dashboard') ?>">📊 Admin Dashboard</a>
-        <a href="#">👥 Manage Users</a>
-        <a href="#">📚 Manage Courses</a>
-        <a href="#">⚙️ System Settings</a>
-    <?php elseif ($role === 'instructor'): ?>
-        <a href="<?= base_url('dashboard') ?>">📘 Instructor Dashboard</a>
-        <a href="#">🧑 My Students</a>
-        <a href="#">📝 Gradebook</a>
-        <a href="#">📅 Class Schedule</a>
-    <?php else: ?>
-        <a href="<?= base_url('dashboard') ?>">🎓 Student Dashboard</a>
-        <a href="#">📖 My Courses</a>
-        <a href="#">🧾 My Grades</a>
-        <a href="#">💬 Announcements</a>
-    <?php endif; ?>
-
+    <a href="<?= base_url('announcements') ?>">📢 Announcements</a>
     <a href="<?= base_url('logout') ?>">🚪 Logout</a>
 </div>
 
 <div class="main-content">
-    <h2><?= ucfirst($role) ?> Dashboard</h2>
+    <h2>Student Announcements</h2>
 
-    <div class="card text-center">
-        <h4>Welcome, <strong><?= esc($name) ?></strong>!</h4>
-        <p>You are logged in as <strong><?= esc($role) ?></strong>.</p>
-
-        <?php if ($role === 'admin'): ?>
-            <p>Here you can manage users, courses, and system settings.</p>
-        <?php elseif ($role === 'instructor'): ?>
-            <p>Here you can manage your students, lessons, and grades.</p>
-        <?php else: ?>
-            <p>Here you can view your lessons, submit assignments, and check grades.</p>
-        <?php endif; ?>
+    <div class="card">
+        <h4>Welcome, <?= esc(session()->get('name')) ?>!</h4>
+        <p>Check back here for important announcements.</p>
     </div>
 </div>
 

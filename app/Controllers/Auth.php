@@ -92,8 +92,7 @@ $session->set([
 ]);
 
 $session->setFlashdata('success', 'Welcome, ' . $user['name']);
-return redirect()->to(site_url('dashboard'));
-switch ($user['role']) {
+switch ($user['role']) {  
                     case 'student':
                         return redirect()->to('/announcements');
                     case 'instructor':
@@ -103,7 +102,7 @@ switch ($user['role']) {
                     default:
                         return redirect()->to('/dashboard');
                 }
-                return redirect()->to(site_url('dashboard'));
+                
 } else {
 $session->setFlashdata('error', 'Invalid email or password.');
 return redirect()->back();
@@ -121,9 +120,11 @@ return redirect()->to(site_url('login'));
 }
 
 // Dashboard
+// app/Controllers/Auth.php
+
 public function dashboard()
 {
-$session = session();
+    $session = session();
 if (!$session->get('isLoggedIn')) {
 return redirect()->to(site_url('login'));
 }

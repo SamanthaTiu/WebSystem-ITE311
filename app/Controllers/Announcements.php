@@ -2,10 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Controller;
 
-class Announcement extends BaseController
+class Announcements extends Controller
 {
     public function index()
     {
@@ -15,6 +14,6 @@ class Announcement extends BaseController
             return redirect()->to(site_url('login'));
         }
         
-        return view('announcements/index');
+        return view('announcements');  // ← No folder, just filename
     }
 }

@@ -87,7 +87,10 @@
         <h4><?= esc(session()->get('name')) ?></h4>
         <p><?= esc(session()->get('email')) ?></p>
     </div>
-    <a href="<?= base_url('admin/dashboard') ?>">📊 Dashboard</a>
+    <a href="<?= base_url('dashboard') ?>">📊 Admin Dashboard</a>
+        <a href="#">👥 Manage Users</a>
+        <a href="#">📚 Manage Courses</a>
+        <a href="#">⚙️ System Settings</a>
     <a href="<?= base_url('logout') ?>">🚪 Logout</a>
 </div>
 
