@@ -1,0 +1,123 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Controllers\BaseController;
+use App\Models\EnrollmentModel;
+use App\Models\CourseModel;
+
+class Dashboard extends BaseController
+{
+    protected $session;
+
+    public function __construct()
+    {
+        $this->session = session();
+    }
+
+    public function index()
+    {
+        // Check if user is logged in
+        if (!$this->session->get('isLoggedIn')) {
+            return redirect()->to('/login');
+        }
+
+        // Get user data from session
+        $userId = $this->session->get('user_id') ?? $this->session->get('id');
+        $name = $this->session->get('name') ?? $this->session->get('username') ?? 'User';
+        $email = $this->session->get('email') ?? '';
+        $role = $this->session->get('role') ?? 'student';
+
+        $data = [
+            'name' => $name,
+            'email' => $email,
+            'role' => $role,
+        ];
+
+        // For students, load courses and enrollments
+        if (in_array(strtolower($role), ['student', 'learner'])) {
+            $courseModel = new CourseModel();
+            $enrollmentModel = new EnrollmentModel();
+
+            // Get all available courses
+            $data['courses'] = $courseModel->findAll();
+
+            // Get user's enrollments
+            if ($userId) {
+                $data['enrollments'] = $enrollmentModel->getUserEnrollments((int)$userId);
+            } else {
+                $data['enrollments'] = [];
+            }
+        }
+
+        return view('auth/dashboard', $data);
+    }
+
+    public function myCourses()
+    {
+        // Check if user is logged in
+        if (!$this->session->get('isLoggedIn')) {
+            return redirect()->to('/login');
+        }
+
+        // Get user data from session
+        $userId = $this->session->get('user_id') ?? $this->session->get('id');
+        $name = $this->session->get('name') ?? $this->session->get('username') ?? 'User';
+        $email = $this->session->get('email') ?? '';
+        $role = $this->session->get('role') ?? 'student';
+
+        $data = [
+            'name' => $name,
+            'email' => $email,
+            'role' => $role,
+        ];
+
+        // For students, load enrolled courses with instructor details
+        if (in_array(strtolower($role), ['student', 'learner'])) {
+            $enrollmentModel = new EnrollmentModel();
+
+            // Get user's enrollments with instructor details
+            if ($userId) {
+                $data['enrollments'] = $enrollmentModel->getUserEnrollmentsWithInstructor((int)$userId);
+            } else {
+                $data['enrollments'] = [];
+            }
+        }
+
+        return view('auth/my_courses', $data);
+    }
+
+    public function myGrades()
+    {
+        // Check if user is logged in
+        if (!$this->session->get('isLoggedIn')) {
+            return redirect()->to('/login');
+        }
+
+        // Get user data from session
+        $userId = $this->session->get('user_id') ?? $this->session->get('id');
+        $name = $this->session->get('name') ?? $this->session->get('username') ?? 'User';
+        $email = $this->session->get('email') ?? '';
+        $role = $this->session->get('role') ?? 'student';
+
+        $data = [
+            'name' => $name,
+            'email' => $email,
+            'role' => $role,
+        ];
+
+        // For students, load grades (assuming grades are stored in enrollments or a separate table)
+        if (in_array(strtolower($role), ['student', 'learner'])) {
+            // For now, we'll use enrollments as a placeholder. In a real app, you'd have a grades table.
+            $enrollmentModel = new EnrollmentModel();
+
+            if ($userId) {
+                $data['grades'] = $enrollmentModel->getUserEnrollmentsWithInstructor((int)$userId);
+            } else {
+                $data['grades'] = [];
+            }
+        }
+
+        return view('auth/my_grades', $data);
+    }
+}

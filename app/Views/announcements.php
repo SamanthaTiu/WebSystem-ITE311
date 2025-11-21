@@ -84,10 +84,13 @@
 
 <div class="sidebar">
     <div class="profile">
-        <div class="circle"><?= strtoupper(substr(session()->get('name'), 0, 1)) ?></div>
-        <h4><?= esc(session()->get('name')) ?></h4>
-        <p><?= esc(session()->get('email')) ?></p>
+        <div class="circle"><?= strtoupper(substr($name ?? 'S', 0, 1)) ?></div>
+        <h4><?= esc($name ?? 'Student') ?></h4>
+        <p><?= esc($email ?? 'student@example.com') ?></p>
     </div>
+    <a href="<?= base_url('dashboard') ?>">🎓 Student Dashboard</a>
+    <a href="<?= base_url('my-courses') ?>">📖 My Subjects</a>
+    <a href="<?= base_url('my-grades') ?>">🧾 My Grades</a>
     <a href="<?= base_url('announcements') ?>">📢 Announcements</a>
     <a href="<?= base_url('logout') ?>">🚪 Logout</a>
 </div>

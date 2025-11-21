@@ -94,7 +94,7 @@ $session->set([
 $session->setFlashdata('success', 'Welcome, ' . $user['name']);
 switch ($user['role']) {  
                     case 'student':
-                        return redirect()->to('/announcements');
+                        return redirect()->to('/dashboard');
                     case 'instructor':
                         return redirect()->to('/instructor/dashboard');
                     case 'admin':

@@ -22,22 +22,21 @@ $routes->post('/login', 'Auth::login');
 
 $routes->get('/logout', 'Auth::logout');
 
-$routes->get('/dashboard', 'Auth::dashboard');
-
 $routes->get('/announcements', 'Announcements::index');
 
 $routes->get('announcements', 'Announcements::index');
 
-// Protected routes with RoleAuth filter
-$routes->group('admin', ['filter' => 'roleauth'], function($routes) {
-    $routes->get('dashboard', 'Admin::dashboard');
-});
+$routes->get('/instructor/dashboard', 'Instructor::dashboard');
 
-$routes->group('teacher', ['filter' => 'roleauth'], function($routes) {
-    $routes->get('dashboard', 'Teacher::dashboard');
-});
+$routes->get('/admin/dashboard', 'Admin::dashboard');
 
-// You can add student routes here if needed in the future
-$routes->group('student', ['filter' => 'roleauth'], function($routes) {
-    // Add student-specific routes here
-});
+$routes->post('/course/enroll', 'Course::enroll'); // AJAX endpoint for enrollment
+
+// Use Dashboard::index for /dashboard to load courses and enrollments
+$routes->get('/dashboard', 'Dashboard::index');
+
+// My Courses page
+$routes->get('/my-courses', 'Dashboard::myCourses');
+
+// My Grades page
+$routes->get('/my-grades', 'Dashboard::myGrades');
