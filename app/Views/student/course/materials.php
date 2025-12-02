@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Subjects</title>
+    <title>Course Materials - <?= esc($course['course_name'] ?? 'Course') ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
@@ -73,43 +73,69 @@
             font-weight: bold;
             font-size: 42px;
         }
-        .course-card {
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background: #fff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
+        .course-info {
+            background: white;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
         }
-        .course-card:hover {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
+        .course-info h3 {
+            color: #007bff;
+            margin-bottom: 15px;
         }
-        .course-card h4 {
-            margin: 0 0 10px 0;
-            font-size: 20px;
-            color: #0d6efd;
-        }
-        .course-card p {
-            margin: 0 0 15px 0;
-            font-size: 14px;
+        .course-info p {
             color: #6c757d;
-        }
-        .course-meta {
-            font-size: 13px;
-            color: #888;
-            font-style: italic;
             margin-bottom: 10px;
         }
-        .instructor-info {
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 6px;
-            border-left: 4px solid #007bff;
+        .materials-list {
+            background: white;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
         }
-        .instructor-info strong {
+        .materials-list h3 {
             color: #007bff;
+            margin-bottom: 15px;
+        }
+        .materials-list ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .materials-list li {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .materials-list li a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .materials-list li a:hover {
+            text-decoration: underline;
+        }
+        .materials-list li .download-btn {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .materials-list li .download-btn:hover {
+            background: #218838;
         }
         .empty-state {
             color: #6c757d;
@@ -150,9 +176,9 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="profile">
-        <div class="circle"><?= strtoupper(substr($name ?? 'S', 0, 1)) ?></div>
-        <h4><?= esc($name ?? 'Student') ?></h4>
-        <p><?= esc($email ?? 'student@example.com') ?></p>
+        <div class="circle"><?= strtoupper(substr(session()->get('name'), 0, 1)) ?></div>
+        <h4><?= esc(session()->get('name')) ?></h4>
+        <p><?= esc(session()->get('email')) ?></p>
     </div>
     <a href="<?= base_url('dashboard') ?>">🎓 Student Dashboard</a>
     <a href="<?= base_url('my-courses') ?>">📖 My Subjects</a>
@@ -163,35 +189,35 @@
 
 <!-- Main Content -->
 <div class="main-content">
-    <h2>My Subjects</h2>
+    <h2>Course Materials</h2>
 
-    <div class="container-fluid">
-        <?php if (!empty($enrollments) && is_array($enrollments)): ?>
-            <?php foreach ($enrollments as $enrollment): ?>
-                <?php
-                    $courseId = $enrollment['course_id'] ?? $enrollment['id'] ?? 0;
-                    $courseTitle = $enrollment['course_name'] ?? $enrollment['name'] ?? 'Untitled Course';
-                    $courseDesc = $enrollment['description'] ?? '';
-                    $enrolledAt = isset($enrollment['enrollment_date'])
-                        ? date('F j, Y', strtotime($enrollment['enrollment_date']))
-                        : 'Unknown date';
-                    $instructorName = $enrollment['instructor_name'] ?? 'Unknown Instructor';
-                ?>
-                <div class="course-card" style="cursor: pointer;" onclick="window.location.href='<?= base_url('course/' . $courseId . '/materials') ?>'">
-                    <h4 style="cursor: pointer;"><?= esc($courseTitle) ?></h4>
-                    <?php if ($courseDesc): ?>
-                        <p><?= esc($courseDesc) ?></p>
-                    <?php endif; ?>
-                    <div class="course-meta">Enrolled: <?= $enrolledAt ?></div>
-                    <div class="instructor-info">
-                        <strong>Instructor:</strong> <?= esc($instructorName) ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+    <div class="course-info">
+        <h3><?= esc($course['course_name'] ?? 'Course') ?></h3>
+        <?php if (!empty($course['description'])): ?>
+            <p><strong>Description:</strong> <?= esc($course['description']) ?></p>
+        <?php endif; ?>
+        <p><strong>Instructor:</strong> <?= esc($course['instructor_name'] ?? 'Unknown') ?></p>
+    </div>
+
+    <div class="materials-list">
+        <h3>Available Materials</h3>
+        <?php if (!empty($materials) && is_array($materials)): ?>
+            <ul>
+                <?php foreach ($materials as $material): ?>
+                    <li>
+                        <div>
+                            <strong><?= esc($material['file_name']) ?></strong>
+                            <br>
+                            <small style="color: #6c757d;">Uploaded: <?= date('F j, Y', strtotime($material['created_at'])) ?></small>
+                        </div>
+                        <a href="<?= base_url('materials/download/' . esc($material['id'])) ?>" class="download-btn" target="_blank">Download</a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
         <?php else: ?>
             <div class="empty-state">
-                <h4>You haven't enrolled in any courses yet.</h4>
-                <p>Visit the <a href="<?= base_url('dashboard') ?>" style="color: #007bff;">dashboard</a> to browse and enroll in available courses.</p>
+                <h4>No materials available yet.</h4>
+                <p>The instructor hasn't uploaded any materials for this course yet. Check back later!</p>
             </div>
         <?php endif; ?>
     </div>

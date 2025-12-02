@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Instructor Dashboard</title>
+    <title>My Courses - Instructor</title>
     <style>
         body {
             margin: 0;
@@ -68,49 +68,33 @@
             font-weight: bold;
             font-size: 42px;
         }
-        .card {
+        .course-card {
             background: #fff;
             border-radius: 15px;
             padding: 20px;
+            margin-bottom: 20px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            max-width: 700px;
-            margin: auto;
-            text-align: center;
         }
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+        .course-card h3 {
+            margin-top: 0;
+            color: #5865daff;
         }
-        .course-box {
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-decoration: none;
-            color: inherit;
+        .course-card p {
+            margin: 5px 0;
         }
-        .course-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-        .course-header {
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .btn {
+            background: #5865daff;
             color: #fff;
-            font-weight: bold;
-            font-size: 18px;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
         }
-        .course-title {
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 16px;
+        .btn:hover {
+            background: #4a5ac7;
         }
     </style>
 </head>
@@ -123,40 +107,30 @@
         <p><?= esc(session()->get('email')) ?></p>
     </div>
     <a href="<?= base_url('instructor/dashboard') ?>">📘 Dashboard</a>
-    <a href="<?= base_url('instructor/course/courses') ?>">📚 My Courses</a>
+    <a href="<?= base_url('instructor/courses') ?>">📚 My Courses</a>
     <a href="<?= base_url('instructor/my_students') ?>">🧑 My Students</a>
-    <a href="#">📅 Class Schedule</a>
+    <a href="<?= base_url('Class-Schedule') ?>">📅 Class Schedule</a>
     <a href="<?= base_url('logout') ?>">🚪 Logout</a>
 </div>
 
 <div class="main-content">
-    <h2>Instructor Dashboard</h2>
+    <h2>My Courses</h2>
 
-    <div class="card">
-        <h4>Welcome, <strong><?= esc(session()->get('name')) ?></strong>!</h4>
-        <p>You are logged in as <strong>Instructor</strong>.</p>
-        <p>You can manage your students, lessons, and grades.</p>
-    </div>
-
-    <?php if (!empty($courses)): ?>
-    <div class="courses-grid">
-        <?php foreach ($courses as $course): ?>
-            <?php
-                $colors = ['#9594e6ff', '#68eb87ff', '#d6747eff'];
-                $color = $colors[$course['course_id'] % 3];
-            ?>
-            <a href="<?= base_url('instructor/course/' . $course['course_id'] . '/manage') ?>" class="course-box">
-                <div class="course-header" style="background-color: <?= $color ?>;">
-                    <?= esc(substr($course['course_name'], 0, 20)) ?>
-                </div>
-                <div class="course-title">
-                    <?= esc($course['course_name']) ?>
-                </div>
-            </a>
-        <?php endforeach; ?>
-    </div>
+    <?php if (empty($courses)): ?>
+        <div class="course-card">
+            <p>No courses assigned yet.</p>
+        </div>
     <?php else: ?>
-    <p>No courses found. <a href="<?= base_url('instructor/course/courses') ?>">Manage Courses</a></p>
+        <?php foreach ($courses as $course): ?>
+            <div class="course-card">
+                <h3><?= esc($course['course_name']) ?></h3>
+    <p><strong>Description:</strong> <?= esc($course['description']) ?></p>
+    <p><strong>Created:</strong> <?= date('F j, Y', strtotime($course['created_at'])) ?></p>
+    <a href="<?= base_url('instructor/course/' . $course['course_id'] . '/manage') ?>" class="btn">Manage Course</a>
+    <a href="<?= base_url('instructor/course/upload?course_id=' . $course['course_id']) ?>" class="btn">Upload Materials</a>
+       
+            </div>
+        <?php endforeach; ?>
     <?php endif; ?>
 </div>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Instructor Dashboard</title>
+    <title>Manage Course</title>
     <style>
         body {
             margin: 0;
@@ -77,40 +77,38 @@
             margin: auto;
             text-align: center;
         }
-        .courses-grid {
+        .sections {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin-top: 30px;
         }
-        .course-box {
+        .section {
             background: #fff;
             border-radius: 15px;
+            padding: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-decoration: none;
-            color: inherit;
-        }
-        .course-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-        .course-header {
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .course-title {
-            padding: 15px;
             text-align: center;
-            font-weight: bold;
-            font-size: 16px;
+            transition: transform 0.3s;
+        }
+        .section:hover {
+            transform: translateY(-5px);
+        }
+        .section h3 {
+            color: #5865daff;
+            margin-bottom: 15px;
+        }
+        .section a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #5865daff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .section a:hover {
+            background: #4a5ac7;
         }
     </style>
 </head>
@@ -130,34 +128,30 @@
 </div>
 
 <div class="main-content">
-    <h2>Instructor Dashboard</h2>
+    <h2>Manage Course: <?= esc($course['course_name']) ?></h2>
 
-    <div class="card">
-        <h4>Welcome, <strong><?= esc(session()->get('name')) ?></strong>!</h4>
-        <p>You are logged in as <strong>Instructor</strong>.</p>
-        <p>You can manage your students, lessons, and grades.</p>
+    <div class="sections">
+        <div class="section">
+            <h3>📢 Announcements</h3>
+            <p>Post and manage course announcements.</p>
+            <a href="<?= base_url('instructor/course/' . $course['course_id'] . '/announcements') ?>">Manage Announcements</a>
+        </div>
+        <div class="section">
+            <h3>📝 Assignments</h3>
+            <p>Create and manage assignments.</p>
+            <a href="<?= base_url('instructor/course/' . $course['course_id'] . '/assignments') ?>">Manage Assignments</a>
+        </div>
+        <div class="section">
+            <h3>📊 Grades</h3>
+            <p>View and manage student grades.</p>
+            <a href="<?= base_url('instructor/course/' . $course['course_id'] . '/grades') ?>">Manage Grades</a>
+        </div>
+        <div class="section">
+            <h3>📁 Files</h3>
+            <p>Upload and manage course materials.</p>
+            <a href="<?= base_url('instructor/course/upload?course_id=' . $course['course_id']) ?>">Manage Files</a>
+        </div>
     </div>
-
-    <?php if (!empty($courses)): ?>
-    <div class="courses-grid">
-        <?php foreach ($courses as $course): ?>
-            <?php
-                $colors = ['#9594e6ff', '#68eb87ff', '#d6747eff'];
-                $color = $colors[$course['course_id'] % 3];
-            ?>
-            <a href="<?= base_url('instructor/course/' . $course['course_id'] . '/manage') ?>" class="course-box">
-                <div class="course-header" style="background-color: <?= $color ?>;">
-                    <?= esc(substr($course['course_name'], 0, 20)) ?>
-                </div>
-                <div class="course-title">
-                    <?= esc($course['course_name']) ?>
-                </div>
-            </a>
-        <?php endforeach; ?>
-    </div>
-    <?php else: ?>
-    <p>No courses found. <a href="<?= base_url('instructor/course/courses') ?>">Manage Courses</a></p>
-    <?php endif; ?>
 </div>
 
 </body>

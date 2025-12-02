@@ -45,3 +45,151 @@ Stack trace:
 #11 C:\xampp\htdocs\ITE311-RAMAS\system\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
 #12 C:\xampp\htdocs\ITE311-RAMAS\spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
 #13 {main}
+ERROR - 2025-11-21 15:08:43 --> mysqli_sql_exception: Can't create table `lms_ramas`.`materials` (errno: 150 "Foreign key constraint is incorrectly formed") in C:\xampp\htdocs\ITE311-RAMAS\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RAMAS\system\Database\MySQLi\Connection.php(327): mysqli->query('CREATE TABLE `m...', 0)
+#1 C:\xampp\htdocs\ITE311-RAMAS\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `m...')
+#2 C:\xampp\htdocs\ITE311-RAMAS\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `m...')
+#3 C:\xampp\htdocs\ITE311-RAMAS\system\Database\Forge.php(570): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `m...')
+#4 C:\xampp\htdocs\ITE311-RAMAS\app\Database\Migrations\2025-11-21-150724_CreateMaterialsTable.php(39): CodeIgniter\Database\Forge->createTable('materials')
+#5 C:\xampp\htdocs\ITE311-RAMAS\system\Database\MigrationRunner.php(876): App\Database\Migrations\CreateMaterialsTable->up()
+#6 C:\xampp\htdocs\ITE311-RAMAS\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\ITE311-RAMAS\system\Commands\Database\Migrate.php(85): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#8 C:\xampp\htdocs\ITE311-RAMAS\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run(Array)
+#9 C:\xampp\htdocs\ITE311-RAMAS\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', Array)
+#10 C:\xampp\htdocs\ITE311-RAMAS\system\Boot.php(388): CodeIgniter\CLI\Console->run()
+#11 C:\xampp\htdocs\ITE311-RAMAS\system\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#12 C:\xampp\htdocs\ITE311-RAMAS\spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-11-21 18:06:17 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "instructor/course.php"
+[Method: GET, Route: instructor/courses]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('instructor/course.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('instructor/course', [], true)
+ 3 APPPATH\Controllers\Instructor.php(50): view('instructor/course', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Instructor->courses()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Instructor))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-21 18:06:21 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "instructor/course.php"
+[Method: GET, Route: instructor/courses]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('instructor/course.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('instructor/course', [], true)
+ 3 APPPATH\Controllers\Instructor.php(50): view('instructor/course', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Instructor->courses()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Instructor))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-21 18:06:47 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "instructor/course.php"
+[Method: GET, Route: instructor/courses]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('instructor/course.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('instructor/course', [], true)
+ 3 APPPATH\Controllers\Instructor.php(50): view('instructor/course', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Instructor->courses()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Instructor))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-21 18:08:23 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\EnrollmentModel::getEnrollmentsWithDetails
+[Method: GET, Route: instructor/my_students]
+in SYSTEMPATH\Model.php on line 927.
+ 1 APPPATH\Controllers\Instructor.php(62): CodeIgniter\Model->__call('getEnrollmentsWithDetails', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Instructor->my_students()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Instructor))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-21 18:10:01 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\EnrollmentModel::getEnrollmentsWithDetails
+[Method: GET, Route: instructor/my_students]
+in SYSTEMPATH\Model.php on line 927.
+ 1 APPPATH\Controllers\Instructor.php(62): CodeIgniter\Model->__call('getEnrollmentsWithDetails', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Instructor->my_students()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Instructor))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-21 18:13:25 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\EnrollmentModel::getEnrollmentsWithDetails
+[Method: GET, Route: instructor/my_students]
+in SYSTEMPATH\Model.php on line 927.
+ 1 APPPATH\Controllers\Instructor.php(62): CodeIgniter\Model->__call('getEnrollmentsWithDetails', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Instructor->my_students()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Instructor))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-21 18:15:08 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\EnrollmentModel::getEnrollmentsWithDetails
+[Method: GET, Route: instructor/my_students]
+in SYSTEMPATH\Model.php on line 927.
+ 1 APPPATH\Controllers\Instructor.php(62): CodeIgniter\Model->__call('getEnrollmentsWithDetails', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Instructor->my_students()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Instructor))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-21 18:19:58 --> ErrorException: Undefined array key "name"
+[Method: GET, Route: instructor/my_students]
+in APPPATH\Views\instructor\my_students.php on line 126.
+ 1 APPPATH\Views\instructor\my_students.php(126): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "name"', 'C:\\xampp\\htdocs\\ITE311-RAMAS\\app\\Views\\instructor\\my_students.php', 126)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\ITE311-RAMAS\\app\\Views\\instructor\\my_students.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('instructor/my_students', [], true)
+ 5 APPPATH\Controllers\Instructor.php(68): view('instructor/my_students', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Instructor->my_students()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Instructor))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-21 18:20:23 --> ErrorException: Undefined array key "name"
+[Method: GET, Route: instructor/my_students]
+in APPPATH\Views\instructor\my_students.php on line 126.
+ 1 APPPATH\Views\instructor\my_students.php(126): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "name"', 'C:\\xampp\\htdocs\\ITE311-RAMAS\\app\\Views\\instructor\\my_students.php', 126)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\ITE311-RAMAS\\app\\Views\\instructor\\my_students.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('instructor/my_students', [], true)
+ 5 APPPATH\Controllers\Instructor.php(68): view('instructor/my_students', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Instructor->my_students()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Instructor))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-21 18:20:47 --> ErrorException: Undefined array key "name"
+[Method: GET, Route: instructor/my_students]
+in APPPATH\Views\instructor\my_students.php on line 126.
+ 1 APPPATH\Views\instructor\my_students.php(126): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "name"', 'C:\\xampp\\htdocs\\ITE311-RAMAS\\app\\Views\\instructor\\my_students.php', 126)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\ITE311-RAMAS\\app\\Views\\instructor\\my_students.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('instructor/my_students', [], true)
+ 5 APPPATH\Controllers\Instructor.php(68): view('instructor/my_students', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Instructor->my_students()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Instructor))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-21 18:20:52 --> ErrorException: Undefined array key "name"
+[Method: GET, Route: instructor/my_students]
+in APPPATH\Views\instructor\my_students.php on line 126.
+ 1 APPPATH\Views\instructor\my_students.php(126): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "name"', 'C:\\xampp\\htdocs\\ITE311-RAMAS\\app\\Views\\instructor\\my_students.php', 126)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\ITE311-RAMAS\\app\\Views\\instructor\\my_students.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('instructor/my_students', [], true)
+ 5 APPPATH\Controllers\Instructor.php(68): view('instructor/my_students', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Instructor->my_students()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Instructor))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(58): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
