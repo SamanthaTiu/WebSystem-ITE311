@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,6 +69,7 @@
         }
         .main-content {
             margin-left: 250px;
+            margin-top: 60px;
             padding: 20px;
         }
         .main-content h2 {
@@ -172,6 +174,39 @@
             margin: 0 auto 20px;
         }
 
+        /* Top Navbar */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 250px;
+            height: 60px;
+            background: #fff;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .top-navbar .notification-icon {
+            font-size: 24px;
+            color: #343a40;
+            cursor: pointer;
+            position: relative;
+        }
+        .top-navbar .notification-icon:hover {
+            color: #007bff;
+        }
+        .top-navbar .notification-icon .badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            font-size: 10px;
+            padding: 2px 5px;
+        }
+
         /* Responsive */
         @media (max-width: 992px) {
             .courses-grid {
@@ -214,6 +249,19 @@
     <a href="<?= base_url('my-grades') ?>">🧾 My Grades</a>
     <a href="<?= base_url('announcements') ?>">📢 Announcements</a>
     <a href="<?= base_url('logout') ?>">🚪 Logout</a>
+</div>
+
+<!-- Top Navbar -->
+<div class="top-navbar">
+    <div class="dropdown">
+        <div class="notification-icon" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            🔔
+            <span id="notification-badge" class="badge bg-danger" style="display: none;">0</span>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" id="notification-list">
+            <li><a class="dropdown-item" href=>No new notifications</a></li>
+        </ul>
+    </div>
 </div>
 
 <!-- Main Content -->
@@ -406,6 +454,9 @@ $(document).ready(function() {
                 // Add to enrolled courses list (prepend to show at top)
                 $('#enrolled-courses-list').prepend(newEnrolledCourse);
 
+                // Refresh notifications to show the new enrollment notification
+                loadNotifications();
+
             } else {
                 // Handle error response
                 showAlert('danger', response.message || 'Failed to enroll in the course');
@@ -453,6 +504,65 @@ $(document).ready(function() {
                 $button.prop('disabled', false).text('Enroll Now');
             }
         });
+    });
+
+    // Function to load notifications
+    function loadNotifications() {
+        $.get('<?= site_url("notifications") ?>', function(response) {
+            if (response.status === 'success') {
+                var unreadCount = response.unread_count;
+                var notifications = response.notifications;
+
+                // Update badge
+                if (unreadCount > 0) {
+                    $('#notification-badge').text(unreadCount).show();
+                } else {
+                    $('#notification-badge').hide();
+                }
+
+                // Update dropdown menu
+                var notificationList = $('#notification-list');
+                notificationList.empty();
+
+                if (notifications.length > 0) {
+                    notifications.forEach(function(notification) {
+                        var notificationItem = `
+                            <li class="dropdown-item alert alert-info p-2 mb-1">
+                                <div>${notification.message}</div>
+                                <button class="btn btn-sm btn-outline-primary mt-1 mark-read-btn" data-id="${notification.id}">Mark as Read</button>
+                            </li>
+                        `;
+                        notificationList.append(notificationItem);
+                    });
+                } else {
+                    notificationList.append('<li><a class="dropdown-item" href="#">No new notifications</a></li>');
+                }
+            }
+        }, 'json');
+    }
+
+    // Load notifications on page load
+    loadNotifications();
+
+    // Optional: Fetch notifications every 60 seconds for real-time updates
+    setInterval(function() {
+        loadNotifications();
+    }, 60000); // 60 seconds
+
+    // Handle mark as read
+    $(document).on('click', '.mark-read-btn', function(e) {
+        e.stopPropagation();
+        var notificationId = $(this).data('id');
+        var $item = $(this).closest('.dropdown-item');
+
+        $.post('<?= site_url("notifications/mark_as_read/") ?>' + notificationId, function(response) {
+            if (response.status === 'success') {
+                $item.remove();
+                loadNotifications(); // Refresh the list and badge
+            } else {
+                showAlert('danger', 'Failed to mark notification as read');
+            }
+        }, 'json');
     });
 });
 </script>

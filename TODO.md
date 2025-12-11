@@ -1,0 +1,2 @@
+- [ ] Update app/Views/auth/register.php to add role selection dropdown
+- [ ] Update app/Controllers/Auth.php to include role in validation and retrieve from POST

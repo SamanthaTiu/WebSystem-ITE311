@@ -24,7 +24,6 @@ $routes->get('/logout', 'Auth::logout');
 
 $routes->get('/announcements', 'Announcements::index');
 
-$routes->get('announcements', 'Announcements::index');
 
 $routes->get('/instructor/dashboard', 'Instructor::dashboard');
 $routes->get('/instructor/courses', 'Instructor::courses');
@@ -37,13 +36,23 @@ $routes->match(['get', 'post'], '/instructor/course/upload', 'Materials::upload'
 // $routes->post('instructor/course/upload', 'CourseController::uploadMaterial');
 
 $routes->get('/admin/dashboard', 'Admin::dashboard');
+$routes->get('/admin/manage-users', 'Admin::manageUsers');
+$routes->get('/admin/manage-courses', 'Admin::manageCourses');
+$routes->get('/admin/edit-user/(:num)', 'Admin::editUser/$1');
+$routes->post('/admin/update-user', 'Admin::updateUser');
+$routes->get('/admin/restrict-user/(:num)', 'Admin::restrictUser/$1');
+$routes->get('/admin/delete-user/(:num)', 'Admin::deleteUser/$1');
 
+$routes->post('/course/enroll', 'Course::enroll'); // AJAX endpoint for enrollment
 $routes->post('course/enroll', 'Course::enroll'); // AJAX endpoint for enrollment
 
 // Use Dashboard::index for /dashboard to load courses and enrollments
 $routes->get('/dashboard', 'Dashboard::index');
 
+// My Courses page
 $routes->get('/my-courses', 'Dashboard::myCourses');
+
+// My Grades page
 $routes->get('/my-grades', 'Dashboard::myGrades');
 
 // Materials routes
@@ -53,3 +62,7 @@ $routes->post('/materials/delete/(:num)', 'Materials::delete/$1');
 $routes->get('/materials/download/(:num)', 'Materials::download/$1');
 $routes->get('/course/(:num)/materials', 'Materials::viewMaterials/$1');
 $routes->get('/course/(:num)/materials', 'Materials::viewMaterials/$1');
+
+// Notifications
+$routes->get('/notifications', 'Notifications::index');
+$routes->post('/notifications/mark_as_read/(:num)', 'Notifications::mark_as_read/$1');

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <title>Edit User</title>
     <style>
         body {
             margin: 0;
@@ -73,9 +73,34 @@
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            max-width: 700px;
+            max-width: 600px;
             margin: auto;
-            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #c82333;
         }
     </style>
 </head>
@@ -88,49 +113,34 @@
         <p><?= esc(session()->get('email')) ?></p>
     </div>
     <a href="<?= base_url('admin/dashboard') ?>">📊 Admin Dashboard</a>
-        <a href="<?= base_url('admin/manage-users') ?>">👥 Manage Users</a>
-        <a href="<?= base_url('admin/manage-courses') ?>">📚 Manage Courses</a>
-        <a href="#">⚙️ System Settings</a>
+    <a href="<?= base_url('admin/manage-users') ?>">👥 Manage Users</a>
+    <a href="<?= base_url('admin/manage-courses') ?>">📚 Manage Courses</a>
+    <a href="#">⚙️ System Settings</a>
     <a href="<?= base_url('logout') ?>">🚪 Logout</a>
 </div>
 
 <div class="main-content">
-    <h2>Admin Dashboard</h2>
+    <h2>Edit User</h2>
 
     <div class="card">
-        <h4>Welcome, <strong><?= esc(session()->get('name')) ?></strong>!</h4>
-        <p>You are logged in as <strong>Admin</strong>.</p>
-        <p>Manage users, courses, and system settings.</p>
-    </div>
+        <form action="<?= base_url('admin/update-user') ?>" method="post">
+            <input type="hidden" name="user_id" value="<?= esc($user['user_id']) ?>">
 
-    <div class="card" style="margin-top: 20px;">
-        <h4>Recent Registrations</h4>
-        <table style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr>
-                    <th style="border: 1px solid #ddd; padding: 8px;">User ID</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Name</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Email</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Role</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($recentRegistrations)): ?>
-                    <?php foreach ($recentRegistrations as $user): ?>
-                        <tr>
-                            <td style="border: 1px solid #ddd; padding: 8px;"><?= esc($user['user_id']) ?></td>
-                            <td style="border: 1px solid #ddd; padding: 8px;"><?= esc($user['name']) ?></td>
-                            <td style="border: 1px solid #ddd; padding: 8px;"><?= esc($user['email']) ?></td>
-                            <td style="border: 1px solid #ddd; padding: 8px;"><?= esc($user['role']) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="4" style="border: 1px solid #ddd; padding: 8px; text-align: center;">No recent registrations found.</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<?= esc($user['name']) ?>" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="<?= esc($user['email']) ?>" required>
+
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+                <option value="student" <?= $user['role'] == 'student' ? 'selected' : '' ?>>Student</option>
+                <option value="teacher" <?= $user['role'] == 'instructor' ? 'selected' : '' ?>>Teacher</option>
+                <option value="admin" <?= $user['role'] == 'admin' ? 'selected' : '' ?>>Admin</option>
+            </select>
+
+            <button type="submit">Update User</button>
+        </form>
     </div>
 </div>
 

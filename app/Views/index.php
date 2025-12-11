@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>index</title>
+    <title>My Website</title>
     <style>
         body {
             background-color: #f8f9fa;

@@ -22,7 +22,8 @@ $rules = [
 'name' => 'required|min_length[3]|max_length[50]',
 'email' => 'required|valid_email',
 'password' => 'required|min_length[6]',
-'password_confirm' => 'matches[password]'
+'password_confirm' => 'matches[password]',
+'role' => 'required|in_list[student,instructor,admin]'
 ];
 
 if (!$this->validate($rules)) {
@@ -42,7 +43,7 @@ $data = [
 'name' => $this->request->getPost('name'),
 'email' => $this->request->getPost('email'),
 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-'role' => 'student',
+'role' => $this->request->getPost('role'),
 ];
 
 // Try insert

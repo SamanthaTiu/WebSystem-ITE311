@@ -64,6 +64,14 @@ class Course extends BaseController
         ]);
 
         if ($insertId) {
+            // Create notification
+            $this->db->table('notifications')->insert([
+                'user_id' => (int) $userId,
+                'message' => 'You have successfully enrolled in the course: ' . $course['course_name'],
+                'is_read' => 0,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
             return $this->response
                         ->setStatusCode(201)
                         ->setJSON(['status' => 'success', 'message' => 'Enrolled successfully', 'enrollment_id' => $insertId]);

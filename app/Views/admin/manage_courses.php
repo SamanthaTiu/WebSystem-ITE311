@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <title>Manage Courses</title>
     <style>
         body {
             margin: 0;
@@ -73,9 +73,20 @@
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            max-width: 700px;
+            max-width: 100%;
             margin: auto;
-            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
@@ -88,45 +99,50 @@
         <p><?= esc(session()->get('email')) ?></p>
     </div>
     <a href="<?= base_url('admin/dashboard') ?>">📊 Admin Dashboard</a>
-        <a href="<?= base_url('admin/manage-users') ?>">👥 Manage Users</a>
-        <a href="<?= base_url('admin/manage-courses') ?>">📚 Manage Courses</a>
-        <a href="#">⚙️ System Settings</a>
+    <a href="<?= base_url('admin/manage-users') ?>">👥 Manage Users</a>
+    <a href="<?= base_url('admin/manage-courses') ?>">📚 Manage Courses</a>
+    <a href="#">⚙️ System Settings</a>
     <a href="<?= base_url('logout') ?>">🚪 Logout</a>
 </div>
 
 <div class="main-content">
-    <h2>Admin Dashboard</h2>
+    <h2>Manage Courses</h2>
 
     <div class="card">
-        <h4>Welcome, <strong><?= esc(session()->get('name')) ?></strong>!</h4>
-        <p>You are logged in as <strong>Admin</strong>.</p>
-        <p>Manage users, courses, and system settings.</p>
-    </div>
-
-    <div class="card" style="margin-top: 20px;">
-        <h4>Recent Registrations</h4>
-        <table style="width: 100%; border-collapse: collapse;">
+        <table>
             <thead>
                 <tr>
-                    <th style="border: 1px solid #ddd; padding: 8px;">User ID</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Name</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Email</th>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Role</th>
+                    <th>Course ID</th>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Instructor</th>
+                    <th>Enrolled Students</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($recentRegistrations)): ?>
-                    <?php foreach ($recentRegistrations as $user): ?>
+                <?php if (!empty($courses)): ?>
+                    <?php foreach ($courses as $course): ?>
                         <tr>
-                            <td style="border: 1px solid #ddd; padding: 8px;"><?= esc($user['user_id']) ?></td>
-                            <td style="border: 1px solid #ddd; padding: 8px;"><?= esc($user['name']) ?></td>
-                            <td style="border: 1px solid #ddd; padding: 8px;"><?= esc($user['email']) ?></td>
-                            <td style="border: 1px solid #ddd; padding: 8px;"><?= esc($user['role']) ?></td>
+                            <td><?= esc($course['course_id']) ?></td>
+                            <td><?= esc($course['course_name']) ?></td>
+                            <td><?= esc($course['description']) ?></td>
+                            <td><?= esc($course['instructor_name'] ?? 'N/A') ?></td>
+                            <td>
+                                <?php if (!empty($course['enrolled_students'])): ?>
+                                    <?= esc(implode(', ', $course['enrolled_students'])) ?>
+                                <?php else: ?>
+                                    No students enrolled
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <a href="#">Edit</a> | <a href="#">Delete</a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="4" style="border: 1px solid #ddd; padding: 8px; text-align: center;">No recent registrations found.</td>
+                        <td colspan="6" style="text-align: center;">No courses found.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
